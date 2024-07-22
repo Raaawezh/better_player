@@ -392,9 +392,23 @@ bool _remoteCommandsInitialized = false;
         } else if ([@"setSpeed" isEqualToString:call.method]) {
             [player setSpeed:[[argsMap objectForKey:@"speed"] doubleValue] result:result];
         }else if ([@"setTrackParameters" isEqualToString:call.method]) {
-            int width = [argsMap[@"width"] intValue];
-            int height = [argsMap[@"height"] intValue];
-            int bitrate = [argsMap[@"bitrate"] intValue];
+           
+        NSNumber *widthNumber = argsMap[@"width"];
+NSNumber *heightNumber = argsMap[@"height"];
+NSNumber *bitrateNumber = argsMap[@"bitrate"];
+
+// Check if any of the properties are nil or not NSNumber
+if (![widthNumber isKindOfClass:[NSNumber class]] || 
+    ![heightNumber isKindOfClass:[NSNumber class]] || 
+    ![bitrateNumber isKindOfClass:[NSNumber class]]) {
+    // If any check fails, return and do nothing
+    NSLog(@"Error: One or more properties are missing or not numbers");
+    return;
+}
+
+int width = [widthNumber intValue];
+int height = [heightNumber intValue];
+int bitrate = [bitrateNumber intValue];
 
             [player setTrackParameters:width: height : bitrate];
             result(nil);
