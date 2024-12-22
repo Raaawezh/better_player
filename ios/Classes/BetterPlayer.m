@@ -547,6 +547,10 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
 }
 
 - (void)setSpeed:(double)speed result:(FlutterResult)result {
+    // Log the current speed to check the input value
+    NSLog(@"Setting speed to: %f", speed);
+
+    // Check if the speed is valid
     if (speed == 1.0 || speed == 0.0) {
         _playerRate = 1;
         result(nil);
@@ -554,26 +558,45 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         result([FlutterError errorWithCode:@"unsupported_speed"
                                    message:@"Speed must be >= 0.0 and <= 2.0"
                                    details:nil]);
-    } else if ((speed > 1.0 && _player.currentItem.canPlayFastForward) ||
-               (speed < 1.0 && _player.currentItem.canPlaySlowForward)) {
+    } else {
+        // Just set the player rate directly based on the speed
         _playerRate = speed;
         result(nil);
-    } else {
-        if (speed > 1.0) {
-            result([FlutterError errorWithCode:@"unsupported_fast_forward"
-                                       message:@"This video cannot be played fast forward"
-                                       details:nil]);
-        } else {
-            result([FlutterError errorWithCode:@"unsupported_slow_forward"
-                                       message:@"This video cannot be played slow forward"
-                                       details:nil]);
-        }
     }
 
-    if (_isPlaying){
+    // Update player rate if the player is playing
+    if (_isPlaying) {
         _player.rate = _playerRate;
     }
 }
+// - (void)setSpeed:(double)speed result:(FlutterResult)result {
+//     if (speed == 1.0 || speed == 0.0) {
+//         _playerRate = 1;
+//         result(nil);
+//     } else if (speed < 0 || speed > 2.0) {
+//         result([FlutterError errorWithCode:@"unsupported_speed"
+//                                    message:@"Speed must be >= 0.0 and <= 2.0"
+//                                    details:nil]);
+//     } else if ((speed > 1.0 && _player.currentItem.canPlayFastForward) ||
+//                (speed < 1.0 && _player.currentItem.canPlaySlowForward)) {
+//         _playerRate = speed;
+//         result(nil);
+//     } else {
+//         if (speed > 1.0) {
+//             result([FlutterError errorWithCode:@"unsupported_fast_forward"
+//                                        message:@"This video cannot be played fast forward"
+//                                        details:nil]);
+//         } else {
+//             result([FlutterError errorWithCode:@"unsupported_slow_forward"
+//                                        message:@"This video cannot be played slow forward"
+//                                        details:nil]);
+//         }
+//     }
+
+//     if (_isPlaying){
+//         _player.rate = _playerRate;
+//     }
+// }
 
 
 - (void)setTrackParameters:(int) width: (int) height: (int)bitrate {
