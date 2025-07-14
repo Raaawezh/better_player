@@ -552,8 +552,6 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
 
     // Check if the speed is valid
     if (speed == 1.0 || speed == 0.0) {
-
-    
         _playerRate = 1;
         result(nil);
     } else if (speed < 0 || speed > 2.0) {

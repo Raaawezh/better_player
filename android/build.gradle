@@ -8,7 +8,7 @@ buildscript {
     ext.workVersion = "2.8.1"
     ext.coreVersion = "1.7.0"
     ext.gradleVersion = "7.0.2"
-    ext.kotlinVersion = "2.1.10"
+    ext.kotlinVersion = "1.9.0"
 
     repositories {
         google()
@@ -16,7 +16,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.7.0'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -32,14 +32,15 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion 33
 
-   compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = '1.8'
     }
 
     sourceSets {
